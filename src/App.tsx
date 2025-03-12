@@ -20,12 +20,25 @@ import Article6 from "./pages/articles/Article6";
 
 const queryClient = new QueryClient();
 
+// Get the correct basename for GitHub Pages
+const getBasename = () => {
+  // Extract the repository name from the URL for GitHub Pages
+  const { pathname } = window.location;
+  // If we're on GitHub Pages, the pathname will be /<repo-name>
+  // This extracts the repo name if it exists
+  const pathSegments = pathname.split('/');
+  if (pathSegments.length > 1 && pathSegments[1] !== "") {
+    return '/' + pathSegments[1];
+  }
+  return '/';
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/">
+      <BrowserRouter basename={getBasename()}>
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-grow pt-16">
